@@ -44,6 +44,7 @@ final class Handler extends ExceptionHandler
                 return new JsonResponse(
                     data: $problem,
                     status: Status::NOT_FOUND->value,
+                    headers: ['Content-Type' => 'application/problem+json']
                 );
             },
         );
@@ -63,6 +64,7 @@ final class Handler extends ExceptionHandler
             return new JsonResponse(
                 data: $problem,
                 status: Status::UNAUTHORIZED->value,
+                headers: ['Content-Type' => 'application/problem+json'],
             );
         });
 
