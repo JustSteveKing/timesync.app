@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -8,31 +10,25 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('team_user', static function (Blueprint $table): void {
-            $table->ulid('id')->primary();
-
-            $table->string('role')->nullable();
-
+        Schema::create('event_participant', static function (Blueprint $table): void {
             $table
-                ->foreignUlid('team_id')
+                ->foreignUlid('event_id')
                 ->index()
                 ->constrained()
                 ->cascadeOnDelete();
 
             $table
-                ->foreignUlid('user_id')
+                ->foreignUlid('participant_id')
                 ->index()
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->timestamps();
-
-            $table->unique(['team_id', 'user_id']);
+            $table->unique(['event_id', 'participant_id']);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('team_user');
+        Schema::dropIfExists('event_participant');
     }
 };

@@ -6,23 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('teams', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->index();
+        Schema::create('teams', static function (Blueprint $table): void {
+            $table->ulid('id')->primary();
+
             $table->string('name');
             $table->boolean('personal_team');
+
+            $table
+                ->foreignUlid('user_id')
+                ->index()
+                ->constrained()
+                ->cascadeOnDelete();
+
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('teams');
