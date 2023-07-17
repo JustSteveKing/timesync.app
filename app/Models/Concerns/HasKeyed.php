@@ -24,7 +24,7 @@ trait HasKeyed
 
     public function newUniqueId(): string
     {
-        return strtolower((string) Str::ulid());
+        return mb_strtolower((string) Str::ulid());
     }
 
     public function getKeyType(): string

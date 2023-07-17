@@ -40,12 +40,12 @@ final class UserFactory extends Factory
         );
     }
 
-    public function withPersonalTeam(callable $callback = null): UserFactory
+    public function withPersonalTeam(?callable $callback = null): UserFactory
     {
         return $this->has(
             Team::factory()
                 ->state(fn (array $attributes, User $user) => [
-                    'name' => $user->name.'\'s Team',
+                    'name' => $user->name . '\'s Team',
                     'user_id' => $user->id,
                     'personal_team' => true,
                 ])
