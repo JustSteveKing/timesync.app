@@ -9,7 +9,9 @@
   "license": "MIT",
   "require": {
     "php": "^8.1",
+    "crell/api-problem": "^3.6",
     "guzzlehttp/guzzle": "^7.7",
+    "juststeveking/sdk-tools": "*",
     "laravel/framework": "^10.15",
     "laravel/jetstream": "^3.2.4",
     "laravel/sanctum": "^3.2.5",

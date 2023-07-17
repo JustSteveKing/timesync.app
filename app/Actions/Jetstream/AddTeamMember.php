@@ -21,7 +21,7 @@ use Laravel\Jetstream\Rules\Role;
 final class AddTeamMember implements AddsTeamMembers
 {
     /**
-     * @throws AuthorizationException
+     * @throws AuthorizationException|ValidationException
      */
     public function add(User $user, Team $team, string $email, ?string $role = null): void
     {

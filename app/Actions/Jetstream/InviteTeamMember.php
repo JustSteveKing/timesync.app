@@ -24,7 +24,7 @@ use Laravel\Jetstream\Rules\Role;
 final class InviteTeamMember implements InvitesTeamMembers
 {
     /**
-     * @throws AuthorizationException
+     * @throws AuthorizationException|ValidationException
      */
     public function invite(User $user, Team $team, string $email, ?string $role = null): void
     {
