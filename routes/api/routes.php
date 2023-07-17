@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\Health\CheckController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth:sanctum')->get('/user', fn (Request $request) => $request->user());
+Route::get('/', CheckController::class)->name('health:check');
