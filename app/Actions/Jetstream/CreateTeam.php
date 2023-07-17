@@ -6,8 +6,11 @@ namespace App\Actions\Jetstream;
 
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Laravel\Jetstream\Contracts\CreatesTeams;
 use Laravel\Jetstream\Events\AddingTeam;
 use Laravel\Jetstream\Jetstream;
@@ -15,11 +18,13 @@ use Laravel\Jetstream\Jetstream;
 final class CreateTeam implements CreatesTeams
 {
     /**
-     * Validate and create a new team for the given user.
-     *
-     * @param  array<string, string>  $input
+     * @param User $user
+     * @param array<string, string> $input
+     * @return Team|Model
+     * @throws AuthorizationException
+     * @throws ValidationException
      */
-    public function create(User $user, array $input): Team
+    public function create(User $user, array $input): Team|Model
     {
         Gate::forUser($user)->authorize('create', Jetstream::newTeamModel());
 

@@ -12,24 +12,10 @@ use Laravel\Jetstream\Contracts\DeletesUsers;
 
 final class DeleteUser implements DeletesUsers
 {
-    /**
-     * The team deleter implementation.
-     *
-     * @var \Laravel\Jetstream\Contracts\DeletesTeams
-     */
-    private $deletesTeams;
+    public function __construct(
+        private readonly DeletesTeams $deletesTeams,
+    ) {}
 
-    /**
-     * Create a new action instance.
-     */
-    public function __construct(DeletesTeams $deletesTeams)
-    {
-        $this->deletesTeams = $deletesTeams;
-    }
-
-    /**
-     * Delete the given user.
-     */
     public function delete(User $user): void
     {
         DB::transaction(function () use ($user): void {
@@ -40,9 +26,6 @@ final class DeleteUser implements DeletesUsers
         });
     }
 
-    /**
-     * Delete the teams and team associations attached to the user.
-     */
     private function deleteTeams(User $user): void
     {
         $user->teams()->detach();

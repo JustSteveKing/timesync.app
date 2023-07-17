@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Actions\Fortify;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Laravel\Fortify\Rules\Password;
 
 trait PasswordValidationRules
 {
     /**
-     * Get the validation rules used to validate passwords.
-     *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array<int, ValidationRule|array|string>
      */
     protected function passwordRules(): array
     {

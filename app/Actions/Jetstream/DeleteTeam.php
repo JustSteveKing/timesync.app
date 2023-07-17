@@ -9,9 +9,6 @@ use Laravel\Jetstream\Contracts\DeletesTeams;
 
 final class DeleteTeam implements DeletesTeams
 {
-    /**
-     * Delete the given team.
-     */
     public function delete(Team $team): void
     {
         $team->purge();

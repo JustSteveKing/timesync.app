@@ -7,8 +7,11 @@ namespace App\Actions\Jetstream;
 use App\Models\Team;
 use App\Models\User;
 use Closure;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Laravel\Jetstream\Contracts\AddsTeamMembers;
 use Laravel\Jetstream\Events\AddingTeamMember;
 use Laravel\Jetstream\Events\TeamMemberAdded;
@@ -18,7 +21,7 @@ use Laravel\Jetstream\Rules\Role;
 final class AddTeamMember implements AddsTeamMembers
 {
     /**
-     * Add a new team member to the given team.
+     * @throws AuthorizationException
      */
     public function add(User $user, Team $team, string $email, ?string $role = null): void
     {
@@ -39,7 +42,7 @@ final class AddTeamMember implements AddsTeamMembers
     }
 
     /**
-     * Validate the add member operation.
+     * @throws ValidationException
      */
     private function validate(Team $team, string $email, ?string $role): void
     {
@@ -54,9 +57,7 @@ final class AddTeamMember implements AddsTeamMembers
     }
 
     /**
-     * Get the validation rules for adding a team member.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array<string, ValidationRule|array|string>
      */
     private function rules(): array
     {
@@ -68,12 +69,9 @@ final class AddTeamMember implements AddsTeamMembers
         ]);
     }
 
-    /**
-     * Ensure that the user is not already on the team.
-     */
     private function ensureUserIsNotAlreadyOnTeam(Team $team, string $email): Closure
     {
-        return function ($validator) use ($team, $email): void {
+        return static function ($validator) use ($team, $email): void {
             $validator->errors()->addIf(
                 $team->hasUserWithEmail($email),
                 'email',
