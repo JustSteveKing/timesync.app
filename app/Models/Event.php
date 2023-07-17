@@ -50,6 +50,7 @@ final class Event extends Model
             foreignKey: 'team_id',
         );
     }
+
     public function participants(): BelongsToMany
     {
         return $this->belongsToMany(
